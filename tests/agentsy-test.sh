@@ -351,6 +351,11 @@ assert_no_plugin_changes "repeated teardown makes no uninstall or remove calls"
 mkdir -p -- "$TEST_DIR/other checkout"
 for source in "Local: $TEST_DIR/other checkout" "GitHub: guardian/agentsy"; do
   printf '%s\n' "$source" >"$TEST_HOME/marketplace-source"
+  : >"$TEST_HOME/copilot.log"
+  PATH="$PLUGIN_PATH" run_agentsy setup plugins
+  assert_failure "refuses to install from a foreign marketplace ($source)"
+  assert_output_contains "was not registered from this checkout" "explains the setup ownership conflict"
+  assert_no_plugin_changes "does not install from a foreign marketplace"
   touch -- "$TEST_HOME/plugin-installed"
   : >"$TEST_HOME/copilot.log"
   PATH="$PLUGIN_PATH" run_agentsy teardown plugins

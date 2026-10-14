@@ -118,8 +118,8 @@ agentsy teardown plugins
 ```
 
 Both commands are idempotent and report when the plugin or marketplace is
-already installed/registered or uninstalled/removed. Teardown refuses to remove
-an `agentsy` marketplace registered from a different checkout.
+already installed/registered or uninstalled/removed. Both refuse to modify an
+`agentsy` marketplace registered from a different checkout.
 
 Run setup in each dev container where you want the plugin. For example, a
 devcontainer `postCreateCommand` or devenv post-create command can run this from

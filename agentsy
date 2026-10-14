@@ -629,13 +629,13 @@ manage_plugins() {
     error "Could not list Copilot plugin marketplaces"
     return 1
   fi
-  if [ "$action" = "teardown" ] && [ -n "$source" ]; then
+  if [ -n "$source" ]; then
     directory=""
     if [[ "$source" == "Local: "* ]]; then
       directory=$(cd -P -- "${source#Local: }" 2>/dev/null && pwd) || directory=""
     fi
     if [ "$directory" != "$AGENTSY_ROOT" ]; then
-      error "The '$marketplace' marketplace was not registered from this checkout and cannot be removed ($source)"
+      error "The '$marketplace' marketplace was not registered from this checkout and cannot be managed ($source)"
       return 1
     fi
   fi
