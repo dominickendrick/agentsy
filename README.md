@@ -94,19 +94,44 @@ For `gpt-6.1-sol`, the script uses `gpt-6-sol` for Copilot's agent configuration
 and sends `gpt-6.1-sol` to OpenAI. All other supported models use the requested
 model ID for both agent configuration and OpenAI requests.
 
-## Plugin marketplace
+## Plugins
 
 This repository is a GitHub Copilot CLI plugin marketplace, which is defined in
 [`.github/plugin/marketplace.json`](.github/plugin/marketplace.json).
 
-To test this, add the marketplace to Copilot CLI and then install a plugin from it with:
+With `copilot` on `PATH`, register this checkout as the `agentsy` marketplace
+and install its `simplify-goal` plugin:
 
 ```bash
-copilot plugin marketplace add guardian/agentsy
-copilot plugin install simplify-goal@agentsy
+agentsy setup plugins
 ```
 
-A new slash command `/simplify-goal` should now be available in your CLI session.
+This modifies your **user-level Copilot CLI configuration**, not project files,
+so the plugin is available across projects for that user. The marketplace points
+to this local checkout: `git pull` updates the plugin for new Copilot sessions.
+The `/simplify-goal` slash command should be available in a new CLI session.
+
+To uninstall the plugin and unregister the marketplace:
+
+```bash
+agentsy teardown plugins
+```
+
+Both commands are idempotent and report when the plugin or marketplace is
+already installed/registered or uninstalled/removed. Teardown refuses to remove
+an `agentsy` marketplace registered from a different checkout.
+
+Run setup in each dev container where you want the plugin. For example, a
+devcontainer `postCreateCommand` or devenv post-create command can run this from
+the Agentsy checkout, after installing Copilot CLI:
+
+```bash
+./agentsy install && ./agentsy setup plugins
+```
+
+If `agentsy` is already on `PATH`, use
+`agentsy install && agentsy setup plugins`. Persist the user's Copilot config
+between containers, or re-run setup when creating each container.
 
 ## Development
 

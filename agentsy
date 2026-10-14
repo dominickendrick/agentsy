@@ -67,6 +67,14 @@ usage() {
     terminal_style_command "agentsy"
     printf ' '
     terminal_style_option "uninstall"
+    printf '\n  '
+    terminal_style_command "agentsy"
+    printf ' '
+    terminal_style_option "setup plugins"
+    printf '\n  '
+    terminal_style_command "agentsy"
+    printf ' '
+    terminal_style_option "teardown plugins"
     printf '\n\n'
     terminal_style_heading "Feature types:"
     printf '\n  script, instructions\n\n'
@@ -565,6 +573,106 @@ uninstall_agentsy() {
   success "Uninstalled:" "agentsy is already uninstalled"
 }
 
+copilot_marketplace() {
+  copilot_plugin marketplace "$@"
+}
+
+# Avoid loading configuration from the caller's project.
+copilot_plugin() (
+  cd -- "$HOME" || return
+  NO_COLOR=1 copilot plugin "$@"
+)
+
+# Copilot CLI 1.0.97 lists marketplaces as "• name (Local: /path)" and
+# plugins as "• name@marketplace (version) (enabled)".
+copilot_marketplace_source() {
+  local marketplace="$1"
+  local listing
+  local line
+
+  listing=$(copilot_marketplace list) || return
+  while IFS= read -r line; do
+    if [[ "$line" =~ ^[[:space:]]*(•|◆|-)[[:space:]]"$marketplace"[[:space:]]\((.*)\)$ ]]; then
+      printf '%s\n' "${BASH_REMATCH[2]}"
+      return
+    fi
+  done <<<"$listing"
+}
+
+copilot_installed_plugins() {
+  local listing
+  local line
+
+  listing=$(copilot_plugin list) || return
+  while IFS= read -r line; do
+    if [[ "$line" =~ ^[[:space:]]*(•|◆|-)[[:space:]]([^[:space:]]+) ]]; then
+      printf '%s\n' "${BASH_REMATCH[2]}"
+    fi
+  done <<<"$listing"
+}
+
+manage_plugins() {
+  local marketplace="agentsy"
+  local plugin="simplify-goal"
+  local action="$1"
+  local source
+  local directory
+  local installed
+  local specification="$plugin@$marketplace"
+
+  if ! command -v copilot >/dev/null 2>&1; then
+    error "The copilot CLI is required but was not found on PATH"
+    return 1
+  fi
+
+  if ! source=$(copilot_marketplace_source "$marketplace"); then
+    error "Could not list Copilot plugin marketplaces"
+    return 1
+  fi
+  if [ "$action" = "teardown" ] && [ -n "$source" ]; then
+    directory=""
+    if [[ "$source" == "Local: "* ]]; then
+      directory=$(cd -P -- "${source#Local: }" 2>/dev/null && pwd) || directory=""
+    fi
+    if [ "$directory" != "$AGENTSY_ROOT" ]; then
+      error "The '$marketplace' marketplace was not registered from this checkout and cannot be removed ($source)"
+      return 1
+    fi
+  fi
+  if ! installed=$(copilot_installed_plugins); then
+    error "Could not list installed Copilot plugins"
+    return 1
+  fi
+
+  if [ "$action" = "setup" ]; then
+    if [ -n "$source" ]; then
+      success "Marketplace:" "$marketplace is already registered"
+    else
+      copilot_marketplace add "$AGENTSY_ROOT" || return
+      success "Marketplace:" "registered $marketplace from $AGENTSY_ROOT"
+    fi
+    if [[ $'\n'"$installed"$'\n' == *$'\n'"$specification"$'\n'* ]]; then
+      success "Plugin:" "$specification is already installed"
+    else
+      copilot_plugin install "$specification" || return
+      success "Plugin:" "installed $specification"
+    fi
+  else
+    if [[ $'\n'"$installed"$'\n' == *$'\n'"$specification"$'\n'* ]]; then
+      copilot_plugin uninstall "$specification" || return
+      success "Plugin:" "uninstalled $specification"
+    else
+      success "Plugin:" "$specification is already uninstalled"
+    fi
+    if [ -n "$source" ]; then
+      copilot_marketplace remove "$marketplace" || return
+      success "Marketplace:" "removed $marketplace"
+    else
+      success "Marketplace:" "$marketplace is already removed"
+    fi
+  fi
+}
+
 manage_feature() {
   local action="$1"
   local type
@@ -615,6 +723,15 @@ main() {
     uninstall)
       shift
       uninstall_agentsy "$@"
+      ;;
+    setup | teardown)
+      local action="$1"
+      shift
+      if [ "${1:-}" != "plugins" ] || [ $# -ne 1 ]; then
+        error "Usage: agentsy $action plugins"
+        return 1
+      fi
+      manage_plugins "$action"
       ;;
     help | --help | -h)
       usage
