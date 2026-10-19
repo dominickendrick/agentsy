@@ -9,6 +9,18 @@
   },
   "plugins": [
     {
+      "name": "e2e-test-setup",
+      "description": "Set up a self-contained e2e test suite: Testcontainers local stack, WireMock mocks and seeded fixtures, Playwright/BDD tests and a CI workflow.",
+      "version": "1.0.0",
+      "source": "./plugins/e2e-test-setup"
+    },
+    {
+      "name": "feature-files",
+      "description": "Generate Cucumber/Gherkin feature files from templates and wire them to Playwright tests with playwright-bdd.",
+      "version": "1.0.0",
+      "source": "./plugins/feature-files"
+    },
+    {
       "name": "simplify-goal",
       "description": "Propose a simpler way of achieving our goals.",
       "version": "1.0.0",

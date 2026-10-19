@@ -1,0 +1,11 @@
+{
+  "name": "e2e-test-setup",
+  "description": "Set up a self-contained e2e test suite: Testcontainers local stack, WireMock mocks and seeded fixtures, Playwright/BDD tests and a CI workflow.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Guardian News & Media"
+  },
+  "repository": "https://github.com/guardian/agentsy",
+  "license": "Apache-2.0",
+  "keywords": ["e2e", "playwright", "testcontainers", "wiremock", "github-actions"]
+}

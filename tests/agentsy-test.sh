@@ -160,7 +160,7 @@ assert_output_contains "Agentsy features" "opens on the feature list"
 pass "Space enables the selected feature"
 assert_output_contains $'\033[?1049l' "restores the terminal screen on exit"
 
-run_tui '\033[B q'
+run_tui '\033[B\033[B\033[B q'
 assert_success "accepts arrow-key navigation"
 [ ! -e "$TEST_HOME/.copilot/instructions/writing-style.instructions.md" ] ||
   fail "Space disables the feature selected with an arrow key"

@@ -1,0 +1,11 @@
+{
+  "name": "feature-files",
+  "description": "Generate Cucumber/Gherkin feature files from templates and wire them to Playwright tests with playwright-bdd.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Guardian News & Media"
+  },
+  "repository": "https://github.com/guardian/agentsy",
+  "license": "Apache-2.0",
+  "keywords": ["bdd", "cucumber", "gherkin", "playwright-bdd"]
+}
