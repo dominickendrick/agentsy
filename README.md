@@ -122,11 +122,11 @@ A new slash command `/simplify-goal` should now be available in your CLI session
 
 The marketplace contains these plugins:
 
-| Plugin           | Contents                                                                                 |
-|------------------|------------------------------------------------------------------------------------------|
-| `e2e-test-setup` | `e2e-test-setup` agent and skills for the e2e stack, fixtures and mocks, and CI workflow |
-| `feature-files`  | `feature-file-from-templates` and `feature-file-step-definitions` skills                 |
-| `simplify-goal`  | `simplify-goal` skill                                                                    |
+| Plugin           | Contents                                                                                                          |
+|------------------|-------------------------------------------------------------------------------------------------------------------|
+| `e2e-test-setup` | `e2e-test-setup` agent, `setup-e2e-tests` skill and skills for the e2e stack, fixtures and mocks, and CI workflow |
+| `feature-files`  | `plan-feature-files`, `feature-file-from-templates` and `feature-file-step-definitions` skills                    |
+| `simplify-goal`  | `simplify-goal` skill                                                                                             |
 
 ## Development
 

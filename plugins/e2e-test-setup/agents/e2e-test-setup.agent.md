@@ -43,7 +43,7 @@ each phase to the matching skill: `e2e-stack-setup`, `e2e-fixtures-and-mocks`,
    As part of discovery, write an overall **e2e test setup plan** as a
    GitHub-flavoured markdown file under `plans/` (e.g.
    `plans/e2e-test-setup.md`): the discovery findings, the phase-by-phase work,
-   and open questions. Also run the **`plan-feature-files` prompt** during this
+   and open questions. Also run the **`plan-feature-files` skill** during this
    phase and fold its feature overview and recommended generation order into the
    same plan file (do not save it separately). Keep this plan updated as you go —
    tick off work and revise decisions as each phase completes.
