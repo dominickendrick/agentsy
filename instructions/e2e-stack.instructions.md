@@ -7,7 +7,7 @@ description: "Conventions for the e2e Testcontainers stack code, Dockerfiles and
 
 Rules for the local-stack setup code under `e2e-tests/setup/` and the Dockerfiles
 under `e2e-tests/images/`. Background and rationale live in the
-`e2e-test-setup` skill's [reference playbook](../skills/e2e-test-setup/reference/e2e-playbook.md).
+`e2e-test-setup` skill's [reference playbook](../plugins/e2e-test-setup/skills/e2e-test-setup/reference/e2e-playbook.md).
 
 ## Dockerfiles
 - Base app/backend images on `debian:bookworm-slim` (glibc). Do **not** use

@@ -8,7 +8,7 @@ argument-hint: '<path to the .feature file whose steps need implementing>'
 
 Turn `e2e-tests/features/**/*.feature` scenarios into runnable tests using [`playwright-bdd`](https://vitalets.github.io/playwright-bdd/), reusing the repo's existing e2e infrastructure.
 
-The [e2e-test-setup agent](../../agents/e2e-test-setup.agent.md) stands up a
+The `e2e-test-setup` agent (from the e2e-test-setup plugin) stands up a
 **basic** stack that covers a small starter set of features. Expect to grow the
 suite incrementally: each new feature you wire up may need backing data or a
 mocked upstream that the stack doesn't provide yet. When it does, extend the
@@ -93,16 +93,16 @@ stack so the feature runs against realistic backing data:
 
 - **New/changed backing data or a mocked upstream** (seed rows, an S3/DynamoDB
   fixture, a new WireMock stub, an extra mocked HTTP API) → follow the
-  [e2e-fixtures-and-mocks skill](../e2e-fixtures-and-mocks/SKILL.md). Keep
+  `e2e-fixtures-and-mocks` skill. Keep
   fixtures synthetic and under `e2e-tests/fixtures/`.
 - **Structural stack change** (a new container, a real dependency, a new network
   alias/port, global-setup wiring) → follow the
-  [e2e-stack-setup skill](../e2e-stack-setup/SKILL.md), which owns the
+  `e2e-stack-setup` skill, which owns the
   Testcontainers orchestration and build-speed rules.
 
 Prefer stack-level fixtures/mocks over per-test `page.route` stubs when the data
 is part of the app's real backing state, so other scenarios reuse it. Re-run the
-relevant [Verify](../e2e-stack-setup/SKILL.md#verify) checks after any stack
+relevant Verify checks from the `e2e-stack-setup` skill after any stack
 change, then continue implementing the steps.
 
 ## Playwright best practices for step bodies
@@ -124,7 +124,7 @@ When a test fails, prefer the Playwright [trace viewer](https://playwright.dev/d
 - Locators prefer user-facing attributes (`getByRole`/`getByLabel`/`getByText`); test ids or evidence-backed ids/classes are used only where no user-facing hook fits.
 - Assertions are web-first (`await expect(locator).…`) with no manual `isVisible()` checks and no un-awaited Playwright calls.
 - External services are stubbed via fixtures/`page.route`, not called live.
-- New backing data / mocked upstreams a feature needs are added at the stack level via the [e2e-fixtures-and-mocks](../e2e-fixtures-and-mocks/SKILL.md) / [e2e-stack-setup](../e2e-stack-setup/SKILL.md) skills, not hacked into step bodies.
+- New backing data / mocked upstreams a feature needs are added at the stack level via the `e2e-fixtures-and-mocks` / `e2e-stack-setup` skills, not hacked into step bodies.
 - Selectors/assertions trace back to the scenario's `# Evidence:` files (ids, classes, labels that actually exist).
 - Repeated steps are parameterised, not copy-pasted.
 - `./e2e-tests/scripts/test-e2e <feature>` runs green for the target feature.

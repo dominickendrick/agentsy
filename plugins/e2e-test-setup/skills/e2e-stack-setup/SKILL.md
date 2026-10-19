@@ -188,7 +188,7 @@ yarn validate:stack
 The script boots the **CI-mode** stack, probes `/_healthcheck`, verifies
 Postgres/LocalStack routing, inspects logs, tears down, and detects leaked
 containers/networks. Write it to the conventions in the
-[e2e-stack instructions](../../instructions/e2e-stack.instructions.md): non-
+[e2e-stack instructions](../../../../instructions/e2e-stack.instructions.md): non-
 interactive, non-zero exit on any failed assertion, cleanup in a trap/finally
 block, and local-only infra (dummy AWS credentials, reject real AWS endpoints).
 It must prove AWS routing goes to LocalStack — list seeded resources

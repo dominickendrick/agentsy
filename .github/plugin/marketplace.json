@@ -10,7 +10,7 @@
   "plugins": [
     {
       "name": "e2e-test-setup",
-      "description": "Set up a self-contained e2e test suite: Testcontainers local stack, WireMock mocks and seeded fixtures, Playwright/BDD tests and a CI workflow.",
+      "description": "Set up a self-contained e2e test suite: Testcontainers local stack, WireMock mocks and seeded fixtures, Playwright/BDD tests and a CI workflow. Requires the feature-files plugin.",
       "version": "1.0.0",
       "source": "./plugins/e2e-test-setup"
     },

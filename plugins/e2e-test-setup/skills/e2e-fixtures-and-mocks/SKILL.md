@@ -109,7 +109,7 @@ The script starts the stack, probes every WireMock route (`/__admin/health` and
 each stubbed path), verifies the seeded S3/DynamoDB records, checks the synthetic
 auth data, inspects unmatched requests and app/mock logs, and confirms cleanup.
 Write it to the conventions in the
-[e2e-stack instructions](../../instructions/e2e-stack.instructions.md): non-
+[e2e-stack instructions](../../../../instructions/e2e-stack.instructions.md): non-
 interactive, non-zero exit on any mismatch, cleanup in a trap/finally block, and
 synthetic data only.
 
