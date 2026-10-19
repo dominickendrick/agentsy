@@ -70,18 +70,6 @@ The `writing-style.instructions.md` file gives Copilot guidance for plain
 repository documentation, comments, commit messages, and pull request
 descriptions.
 
-#### E2E stack instructions
-
-The `e2e-stack.instructions.md` file gives Copilot conventions for e2e
-Testcontainers stack code, Dockerfiles and validation scripts under
-`e2e-tests/`. It accompanies the `e2e-test-setup` plugin.
-
-#### Feature file instructions
-
-The `feature-files.instructions.md` file gives Copilot conventions for
-authoring Cucumber/Gherkin `.feature` files under `e2e-tests/features/`. It
-accompanies the `feature-files` plugin.
-
 ### Scripts
 
 #### OpenAI-backed Copilot CLI
@@ -119,14 +107,6 @@ copilot plugin install simplify-goal@agentsy
 ```
 
 A new slash command `/simplify-goal` should now be available in your CLI session.
-
-The marketplace contains these plugins:
-
-| Plugin           | Contents                                                                                                          |
-|------------------|-------------------------------------------------------------------------------------------------------------------|
-| `e2e-test-setup` | `e2e-test-setup` agent, `setup-e2e-tests` skill and skills for the e2e stack, fixtures and mocks, and CI workflow |
-| `feature-files`  | `plan-feature-files`, `feature-file-from-templates` and `feature-file-step-definitions` skills                    |
-| `simplify-goal`  | `simplify-goal` skill                                                                                             |
 
 ## Development
 
